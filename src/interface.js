@@ -26,11 +26,47 @@ document.addEventListener("DOMContentLoaded", () => {
     thermostat.switchPowerSavingModeOn();
     document.querySelector('#power-saving-status').innerText = 'on';
     updateTemperature();
-  })
+  });
 
   document.querySelector('#powersaving-off').addEventListener('click', () => {
     thermostat.switchPowerSavingModeOff();
     document.querySelector('#power-saving-status').innerText = 'off';
     updateTemperature();
-  })
+  });
+
+  // const selectElement = document.querySelector('#current-city');
+  // selectElement.addEventListener('change', (event) => {
+  //   const city = event.target.value;
+  //   const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=1bca9c1136dadd08442301dfd28a0656&units=metric`
+  
+  //   fetch(url)
+  //     .then((response) => {
+  //       return response.json()
+  //     })
+  //     .then((data) => {
+  //       document.querySelector('#current-temperature').innerText = data.main.temp;
+  //     })
+  // });
+
+  const displayWeather = (city) => {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=1bca9c1136dadd08442301dfd28a0656&units=metric`
+  
+    fetch(url)
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        document.querySelector('#current-temperature').innerText = data.main.temp;
+      })
+  };
+
+  displayWeather('London');
+
+  document.querySelector('#current-city').addEventListener('change', (event) => {
+    event.preventDefault();
+    const city = document.querySelector('#current-city').value;
+
+    displayWeather(city);
+  });
+  
 });
